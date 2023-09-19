@@ -8,100 +8,107 @@
 </head>
 <body>
     <header>
-        <h1>Simulador de paguinacion</h1>
+        <h1>Simulador de paginacion</h1>
     </header>
 
     <main>
         <section id="contenedor">
-            <div id="contenedor-proceso">
-                <p>Proceso</p>
-                <select name="proceso">
-                    <option value="proceso1">A</option>
-                    <option value="proceso2">B</option>
-                    <option value="proceso3">C</option>
-                </select>
+            <div class="columna-1" id="contenedor-proceso">
+                <p>Proceso:</p>
+                <div id="select-procesos">
+                    <select name="proceso">
+                        <option value="proceso1">A</option>
+                        <option value="proceso2">B</option>
+                        <option value="proceso3">C</option>
+                    </select>
+                </div>
             </div>
             
-            <div id="contenedor-tamanio">
-                <p>Tamaño</p>
+            <div class="columna-1" id="contenedor-tamanio">
+                <p>Tamaño:</p>
                 <select name="tamanio">
                     <option value="proceso1">1</option>
                     <option value="proceso2">2</option>
                     <option value="proceso3">3</option>
                 </select>
-                <button>Iniciar proceso</button>
+                <button class="btn-columna-1">Iniciar proceso</button>
             </div>
-
-            <div id="contenedor-terminarP">
-                <p>Terminar proceso</p>
+            <div class="columna-1" id="contenedor-terminarP">
+                <p>Terminar proceso:</p>
                 <select name="proceso-terminar">
                     <option value="proceso1">A</option>
                     <option value="proceso2">B</option>
                     <option value="proceso3">C</option>
                 </select>
-                <button>Terminar proceso</button>
+                <button class="btn-columna-1">Terminar proceso</button>
             </div>
 
-            <div id="contenedor-proceso-activo">
-                <div>
+            <div class="columna-2" id="contenedor-proceso-activo">
+                <div class="texto-numero">
                     <p>No. Procesos</p>
                     <span id="numeros-procesos">0</span>
                 </div>
-                <div>
+                <div class="texot-btn">
                     <p>Proceso Activo</p>
-                    <button>Borrar</button>
+                    <button class="btn-columna-2">Borrar</button>
                 </div>
                 <div class="activo-espera" id="procesos-activos">
+                    <p class="p">A</p>
+                    <P class="p">B</P>
                 </div>
             </div>
-            <div id="contenedor-proceso-espera">
-                <div>
+            <div class="columna-2" id="contenedor-proceso-espera">
+                <div class="texot-btn">
                     <p>Procesos en espera</p>
-                    <button>Reiniciar proceso</button>
+                    <button class="btn-columna-2">Reiniciar proceso</button>
                 </div>
                 <div class="activo-espera" id="proceso-espera">
+                    <p class="p">A</p>
+                    <P class="p">B</P>
                 </div>
             </div>
-
-            <div id="contenedor-marco-paguina">
-                <table id="marco-paguina">
-                    <tr>
-                        <td>1</td>
-                        <td>####</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>####</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>####</td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>####</td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>####</td>
-                    </tr>
-                    <tr>
-                        <td>6</td>
-                        <td>####</td>
-                    </tr>
-                    <tr>
-                        <td>7</td>
-                        <td>####</td>
-                    </tr>
-                    <tr>
-                        <td>8</td>
-                        <td>####</td>
-                    </tr>
-                </table>
-                <div id="paguinas-ocupadas">
+            
+            <div class="columna-3" id="paguinas-ocupadas">
+                <div class="texto-numero">
                     <p>Paguinas ocupadas</p>
                     <span id="numero-paguinas-ocupadas">0</span>
                 </div>
+            </div>
+            <div class="columna-3" id="contenedor-marco-paguina">
+                <table id="marco-paguina">
+                    <tr>
+                        <td class="num">1</td>
+                        <td>####</td>
+                    </tr>
+                    <tr>
+                        <td class="num">2</td>
+                        <td>####</td>
+                    </tr>
+                    <tr>
+                        <td class="num">3</td>
+                        <td>####</td>
+                    </tr>
+                    <tr>
+                        <td class="num">4</td>
+                        <td>####</td>
+                    </tr>
+                    <tr>
+                        <td class="num">5</td>
+                        <td>####</td>
+                    </tr>
+                    <tr>
+                        <td class="num">6</td>
+                        <td>####</td>
+                    </tr>
+                    <tr>
+                        <td class="num">7</td>
+                        <td>####</td>
+                    </tr>
+                    <tr>
+                        <td class="num">8</td>
+                        <td>####</td>
+                    </tr>
+                </table>
             </div>
         </section>
     </main>
