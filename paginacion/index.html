@@ -7,6 +7,104 @@
     <title>Simulador de paginacion</title>
 </head>
 <body>
+    <header>
+        <h1>Simulador de paguinacion</h1>
+    </header>
+
+    <main>
+        <section id="contenedor">
+            <div id="contenedor-proceso">
+                <p>Proceso</p>
+                <select name="proceso">
+                    <option value="proceso1">A</option>
+                    <option value="proceso2">B</option>
+                    <option value="proceso3">C</option>
+                </select>
+            </div>
+            
+            <div id="contenedor-tamanio">
+                <p>Tamaño</p>
+                <select name="tamanio">
+                    <option value="proceso1">1</option>
+                    <option value="proceso2">2</option>
+                    <option value="proceso3">3</option>
+                </select>
+                <button>Iniciar proceso</button>
+            </div>
+
+            <div id="contenedor-terminarP">
+                <p>Terminar proceso</p>
+                <select name="proceso-terminar">
+                    <option value="proceso1">A</option>
+                    <option value="proceso2">B</option>
+                    <option value="proceso3">C</option>
+                </select>
+                <button>Terminar proceso</button>
+            </div>
+
+            <div id="contenedor-proceso-activo">
+                <div>
+                    <p>No. Procesos</p>
+                    <span id="numeros-procesos">0</span>
+                </div>
+                <div>
+                    <p>Proceso Activo</p>
+                    <button>Borrar</button>
+                </div>
+                <div class="activo-espera" id="procesos-activos">
+                </div>
+            </div>
+            <div id="contenedor-proceso-espera">
+                <div>
+                    <p>Procesos en espera</p>
+                    <button>Reiniciar proceso</button>
+                </div>
+                <div class="activo-espera" id="proceso-espera">
+                </div>
+            </div>
+
+            <div id="contenedor-marco-paguina">
+                <table id="marco-paguina">
+                    <tr>
+                        <td>1</td>
+                        <td>####</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>####</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>####</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>####</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>####</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>####</td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>####</td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>####</td>
+                    </tr>
+                </table>
+                <div id="paguinas-ocupadas">
+                    <p>Paguinas ocupadas</p>
+                    <span id="numero-paguinas-ocupadas">0</span>
+                </div>
+            </div>
+        </section>
+    </main>
     
     <script src="./main.js"></script>
 </body>
