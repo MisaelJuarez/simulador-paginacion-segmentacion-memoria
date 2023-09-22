@@ -38,7 +38,7 @@ h1 {
     grid-column: 3 / 4;
     grid-row: 1 / 2;
 }
-#contenedor-marco-paguina {
+#contenedor-marco-pagina {
     grid-column: 3 / 4;
     grid-row: 2 / 6;
 }
@@ -108,4 +108,25 @@ td {
     text-align: center;
     margin: 2px;
     font-size: 15px;
+}
+
+.color-memoria-a {
+    background-color: blue;
+    text-align: center;
+}
+.color-memoria-b {
+    background-color: red;
+    text-align: center;
+}
+.color-memoria-c {
+    background-color: green;
+    text-align: center;
+}
+.color-memoria-d {
+    background-color: yellow;
+    text-align: center;
+}
+.color-memoria-e {
+    background-color: violet;
+    text-align: center;
 }
