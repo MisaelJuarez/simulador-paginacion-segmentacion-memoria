@@ -2,14 +2,22 @@ const $btnIniciarProceso = document.getElementById('iniciar-proceso');
 const $procesosActivos = document.getElementById('procesos-activos');
 const $numeroProcesos = document.getElementById('numeros-procesos');
 const $numeroPaginasOcupadas = document.getElementById('numero-paguinas-ocupadas');
+const $terminarProceso = document.getElementById('terminar-proceso');
+const $procesosEspera = document.getElementById('procesos-espera');
 
 let memoria = ['','','','','','','',''];
 
-let $paguinas = document.querySelectorAll('.pagina');
-let $arrayPaguinas = Array.from($paguinas);
-
 let contadorProcesos = 0;
 let contadorPaginas = 0;
+
+const procesosEnEspera = [];
+const datosProceso = {
+    tipo: '',
+    tamanio: ''
+}
+
+let $paguinas = document.querySelectorAll('.pagina');
+let $arrayPaguinas = Array.from($paguinas);
 
 const agregarProceso = (tipoProceso) => {
     let p = document.createElement("p");
@@ -39,12 +47,37 @@ const llenarmemoria = (tamanioProceso,tipoProceso) => {
         }
     }
 }
+const contarProcesos_contarPaginas = (tamanioProceso) => {
+    contadorProcesos++;
+    $numeroProcesos.textContent = contadorProcesos;
+    contadorPaginas += parseInt(tamanioProceso);
+    $numeroPaginasOcupadas.textContent = contadorPaginas;
+}
+const procesosParaTerminar = (tipoProceso) => {
+    let option = document.createElement('option');
+    option.textContent = tipoProceso;
+    option.setAttribute('value',`${tipoProceso}`);
+    $terminarProceso.appendChild(option);
+}
 const espacioEnMemoria = () => {
     let espacio = 0;
     memoria.forEach((e) => {
         if (e === '') espacio++;
     });
     return espacio;
+}
+const obtenerDatosProceso = (tipoProceso,tamanioProceso) => {
+    datosProceso.tipo = tipoProceso;
+    datosProceso.tamanio = tamanioProceso;
+    let copiaDatos = Object.assign({}, datosProceso);
+    procesosEnEspera.push(copiaDatos); 
+    console.log(procesosEnEspera);
+}
+const agregarProcesoEspera = (tipoProceso) => {
+    let p = document.createElement('p');
+    p.textContent = tipoProceso;
+    p.classList.add('p');
+    $procesosEspera.appendChild(p);
 }
 
 $btnIniciarProceso.addEventListener('click', () => {
@@ -56,12 +89,11 @@ $btnIniciarProceso.addEventListener('click', () => {
     if (espacioEnMemoria() >= $tamanioProceso) {
         agregarProceso($tipoProceso);
         llenarmemoria($tamanioProceso,$tipoProceso);
-        contadorProcesos++;
-        $numeroProcesos.textContent = contadorProcesos;
-        contadorPaginas += parseInt($tamanioProceso);
-        $numeroPaginasOcupadas.textContent = contadorPaginas;
+        contarProcesos_contarPaginas($tamanioProceso);
+        procesosParaTerminar($tipoProceso);
     } else {
-        alert('No hay suficiente espacio');
+        obtenerDatosProceso($tipoProceso,$tamanioProceso);
+        agregarProcesoEspera($tipoProceso);
     }
 
     console.log(memoria);
