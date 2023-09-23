@@ -111,22 +111,22 @@ td {
 }
 
 .color-memoria-a {
-    background-color: blue;
+    background-color: rgb(55, 55, 246);
     text-align: center;
 }
 .color-memoria-b {
-    background-color: red;
+    background-color: rgb(39, 247, 237);
     text-align: center;
 }
 .color-memoria-c {
-    background-color: green;
+    background-color: rgb(92, 250, 92);
     text-align: center;
 }
 .color-memoria-d {
-    background-color: yellow;
+    background-color: rgb(246, 246, 49);
     text-align: center;
 }
 .color-memoria-e {
-    background-color: violet;
+    background-color: rgb(246, 95, 246);
     text-align: center;
 }
