@@ -29,7 +29,6 @@
             <div class="columna-1" id="contenedor-tamanio">
                 <p>Tamaño:</p>
                 <select name="tamanio" id="tamanio-proceso">
-                    <option value="1">64</option>
                     <option value="1">128</option>
                     <option value="2">256</option>
                     <option value="4">512</option>
@@ -47,7 +46,7 @@
             <div class="columna-2" id="contenedor-proceso-activo">
                 <div class="texto-numero">
                     <p>No. Procesos</p>
-                    <span id="numeros-procesos">0</span>
+                    <span id="numeros-procesos" class="numero">0</span>
                 </div>
                 <div class="texot-btn">
                     <p>Proceso Activo</p>
@@ -59,7 +58,11 @@
             <div class="columna-2" id="contenedor-proceso-espera">
                 <div class="texot-btn">
                     <p>Procesos en espera</p>
-                    <button class="btn-columna-2">Reiniciar proceso</button>
+                    <button class="btn-columna-2" id="btn-reiniciar-proceso">Reiniciar proceso</button>
+                    <div class="proceso-seleccionado-espera">
+                        <span id="reiniciar-proceso"></span>
+                        <span id="reiniciar-tamanio"></span>
+                    </div>
                 </div>
                 <div class="activo-espera" id="procesos-espera">
                 </div>
@@ -68,7 +71,7 @@
             <div class="columna-3" id="paguinas-ocupadas">
                 <div class="texto-numero">
                     <p>Paginas ocupadas</p>
-                    <span id="numero-paguinas-ocupadas">0</span>
+                    <span id="numero-paguinas-ocupadas" class="numero">0</span>
                 </div>
             </div>
             <div class="columna-3" id="contenedor-marco-pagina">

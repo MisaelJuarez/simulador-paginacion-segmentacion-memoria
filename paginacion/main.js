@@ -5,11 +5,17 @@ const $numeroPaginasOcupadas = document.getElementById('numero-paguinas-ocupadas
 const $terminarProceso = document.getElementById('terminar-proceso');
 const $procesosEspera = document.getElementById('procesos-espera');
 const $btnTerminarProceso = document.getElementById('btn-terminar-proceso');
+const $reinicarProceso = document.getElementById('reiniciar-proceso');
+const $reinicarTamanio = document.getElementById('reiniciar-tamanio');
+const $btnReinicarProceso = document.getElementById('btn-reiniciar-proceso');
 
 let memoria = ['','','','','','','',''];
 
 let contadorProcesos = 0;
 let contadorPaginas = 0;
+
+let procesoEnEsperaSeleccionado = '';
+let tamanioEnEsperaSeleccionado = '';
 
 const procesosEnEspera = [];
 const datosProceso = {
@@ -67,10 +73,13 @@ const obtenerDatosProceso = (tipoProceso,tamanioProceso) => {
     procesosEnEspera.push(copiaDatos); 
     console.log(procesosEnEspera);
 }
-const agregarProcesoEspera = (tipoProceso) => {
+const agregarProcesoEspera = (tipoProceso,tamanioProceso) => {
     let p = document.createElement('p');
     p.textContent = tipoProceso;
     p.classList.add('p');
+    p.setAttribute('data-proceso',`${tipoProceso}`);
+    p.setAttribute('data-tamanio',`${tamanioProceso}`);
+    p.setAttribute('id',`${tipoProceso}`);
     $procesosEspera.appendChild(p);
 }
 
@@ -99,6 +108,7 @@ const quitarProcesoMemoriaVisual = (procesoSeleccionado) => {
 const actualizarNprocesosNpaginas = (procesoSeleccionado) => {
     contadorProcesos--;
     $numeroProcesos.textContent = contadorProcesos; 
+    console.log(arrayProcesosActivos);
     arrayProcesosActivos.forEach(e => {
         if (e.id == '1' && e.className == procesoSeleccionado) {
             contadorPaginas -= 1;
@@ -111,6 +121,36 @@ const actualizarNprocesosNpaginas = (procesoSeleccionado) => {
         }
     });
     $numeroPaginasOcupadas.textContent = contadorPaginas;
+}
+
+const mostrarProcesoSeleccionado = (proceso,tamanio) => {
+    $reinicarProceso.textContent = proceso;
+    if (tamanio == '1') {
+        $reinicarTamanio.textContent = '128';
+    } else if(tamanio == '2') {
+        $reinicarTamanio.textContent = '256';
+    } else if(tamanio == '4') {
+        $reinicarTamanio.textContent = '512';
+    } else if(tamanio == '8') {
+        $reinicarTamanio.textContent = '1,024';
+    }
+}
+const reiniciarProcesoSeleccionado = (proceso,tamanio) => {
+    console.log(procesoEnEsperaSeleccionado);
+    console.log(tamanioEnEsperaSeleccionado);
+    let $procesosEliminar = document.querySelector(`#procesos-espera > #${proceso}`);
+    if (parseInt(tamanio) <= espacioEnMemoria()) {
+        alert('Si hay espacio en Memoria');
+        agregarProceso(proceso);
+        llenarmemoria(tamanio,proceso);
+        procesosParaTerminar(proceso,tamanio);
+        contarProcesos_contarPaginas(tamanio);
+        $procesosEliminar.remove();
+        $reinicarProceso.textContent = '';
+        $reinicarTamanio.textContent = '';
+    } else{
+        alert('No hay espacio en memoria');
+    }
 }
 
 $btnIniciarProceso.addEventListener('click', () => {
@@ -126,7 +166,7 @@ $btnIniciarProceso.addEventListener('click', () => {
         procesosParaTerminar($tipoProceso,$tamanioProceso);
     } else {
         obtenerDatosProceso($tipoProceso,$tamanioProceso);
-        agregarProcesoEspera($tipoProceso);
+        agregarProcesoEspera($tipoProceso,$tamanioProceso);
     }
     arrayProcesosActivos = Array.from($terminarProceso);
     console.log(memoria);
@@ -141,4 +181,20 @@ $btnTerminarProceso.addEventListener('click', () => {
     quitarProcesoMemoriaVisual($procesoSeleccionado);
     actualizarNprocesosNpaginas($procesoSeleccionado);
     console.log(memoria);
+});
+
+$procesosEspera.addEventListener('click',(e) => {
+    procesoEnEsperaSeleccionado = e.target.dataset.proceso;
+    tamanioEnEsperaSeleccionado = e.target.dataset.tamanio;
+    
+    if (e.target.id) {
+        $reinicarProceso.textContent = '';
+        $reinicarTamanio.textContent = '';
+    }
+    mostrarProcesoSeleccionado(procesoEnEsperaSeleccionado,tamanioEnEsperaSeleccionado);
+});
+
+$btnReinicarProceso.addEventListener('click',() => {
+    reiniciarProcesoSeleccionado(procesoEnEsperaSeleccionado,tamanioEnEsperaSeleccionado);
+    arrayProcesosActivos = Array.from($terminarProceso);
 });
