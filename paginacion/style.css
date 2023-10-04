@@ -1,11 +1,24 @@
 * {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: bold;
     font-family: Arial, Helvetica, sans-serif;
 }
 
+body {
+    background-color: #000000;
+    background-image: radial-gradient(circle, #393a3b, #2e2f30, #232526, #191b1c, #0e1111);
+    background-image: radial-gradient(circle, #9cc2c2, #72959b, #4c6a75, #2a424f, #0c1d2b);
+    background-image: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.6),
+        rgba(0, 0, 0, 0.6)
+      ),
+     url(./img/fondo_2.jpg);
+     color: white;
+}
+
 h1 {
-    font-size: 25px;
+    font-size: 30px;
     text-align: center;
     margin-top: 20px;
 }
@@ -72,7 +85,7 @@ select {
 .activo-espera {
     width: 120px;
     height: 150px;
-    border: 3px solid black;
+    border: 3px solid white;
     margin-top: 10px;
 }
 .texot-btn {
@@ -84,7 +97,7 @@ select {
     border-radius: 20px;
 }
 #procesos-espera > p:hover {
-    background-color: red;
+    background-color: rgba(130,128,16,1);
     cursor: pointer;
 }
 
@@ -95,7 +108,10 @@ select {
 }
 
 td {
-    border: 2px solid black;
+    border: 2px solid rgb(133, 132, 132);
+}
+tr > .pagina {
+    color: black;
 }
 
 .num {
@@ -145,5 +161,19 @@ td {
 
 .numero {
     font-size: 25px;
+}
+
+button {
+    color: white;
+    background: rgb(130,128,16);
+    background: linear-gradient(180deg, rgba(130,128,16,1) 14%, rgba(176,197,26,1) 85%);
+    border: none;
+}
+
+button:hover {
+    cursor: pointer;
+    background: rgb(130,128,16);
+    background: linear-gradient(0deg, rgba(130,128,16,1) 62%, rgba(176,197,26,1) 92%);
+    transition: all 2s ease-in-out;
 }
 
