@@ -84,7 +84,7 @@ select {
 }
 .activo-espera {
     width: 120px;
-    height: 150px;
+    height: 155px;
     border: 3px solid white;
     margin-top: 10px;
 }
@@ -177,3 +177,12 @@ button:hover {
     transition: all 2s ease-in-out;
 }
 
+.boton-dasactivado {
+    background: rgb(131,131,128);
+    background: linear-gradient(0deg, rgba(131,131,128,1) 62%, rgba(190,191,186,1) 92%);
+}
+.boton-dasactivado:hover {
+    cursor: default;
+    background: rgb(131,131,128);
+    background: linear-gradient(0deg, rgba(131,131,128,1) 62%, rgba(190,191,186,1) 92%);
+}

@@ -20,26 +20,65 @@ let tamanioEnEsperaSeleccionado = '';
 
 let arrayProcesosActivos;
 
+let procesoRepetido = 1;
+
 let $paguinas = document.querySelectorAll('.pagina');
 let $arrayPaguinas = Array.from($paguinas);
 
-const agregarProceso = (tipoProceso) => {
+const obtenerColorAleatorio = () => {
+    const letras = "0123456789ABCDEF";
+    let color = "#";
+    for (let i = 0; i < 6; i++) {
+      color += letras[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+const procesoExiste = (proceso) => {
+    let existe = false;
+    for (let i = 0; i < memoria.length; i++){
+        if (memoria[i] == proceso) existe = true;
+    }
+    return existe;
+}
+const agregarProceso = (tipoProceso,bandera=true) => {
     let p = document.createElement("p");
-    p.textContent = tipoProceso;
-    p.setAttribute('class',`p ${tipoProceso}`);
+    if (procesoExiste(tipoProceso)) {
+        p.textContent = tipoProceso+procesoRepetido;
+        p.setAttribute('class',`p ${tipoProceso+procesoRepetido}`);
+    } else {
+        p.textContent = tipoProceso;
+        p.setAttribute('class',`p ${tipoProceso}`);
+    }
     $procesosActivos.appendChild(p);
 }
 const llenarmemoria = (tamanioProceso,tipoProceso) => {
+    let procesoIguales = procesoExiste(tipoProceso);
+    let colorAleatorio = obtenerColorAleatorio();
+    let hayProcesosRepetidos = false;
     for (let i = 0; i < parseInt(tamanioProceso); i++) {
         for (let j = 0; j < $arrayPaguinas.length; j++) {
-            if (memoria[j] === '') {
-                $arrayPaguinas[j].textContent = tipoProceso;
-                memoria[j] = tipoProceso;
-                $arrayPaguinas[j].classList.add(`color-memoria-${tipoProceso.toLowerCase()}`);
-                break;
+            if (procesoIguales) {
+                if (memoria[j] === '') {
+                    $arrayPaguinas[j].textContent = tipoProceso+procesoRepetido;
+                    memoria[j] = tipoProceso+procesoRepetido;
+                    $arrayPaguinas[j].style.backgroundColor = colorAleatorio;
+                    $arrayPaguinas[j].style.textAlign = 'center';
+                    hayProcesosRepetidos = true;
+                    break;
+                }
+            } else {
+                if (memoria[j] === '') {
+                    $arrayPaguinas[j].textContent = tipoProceso;
+                    memoria[j] = tipoProceso;
+                    $arrayPaguinas[j].classList.add(`color-memoria-${tipoProceso.toLowerCase()}`);
+                    break;
+                }
             }
         }
     }
+    if (hayProcesosRepetidos) procesoRepetido++;
+    console.log(procesoIguales);
+    console.log(memoria);
 }
 const contarProcesos_contarPaginas = (tamanioProceso) => {
     contadorProcesos++;
@@ -49,10 +88,17 @@ const contarProcesos_contarPaginas = (tamanioProceso) => {
 }
 const procesosParaTerminar = (tipoProceso,tamanioProceso) => {
     let option = document.createElement('option');
-    option.textContent = tipoProceso;
-    option.setAttribute('value',`${tipoProceso}`);
-    option.setAttribute('class',`${tipoProceso}`);
-    option.setAttribute('id',`${tamanioProceso}`);
+    if (procesoExiste(tipoProceso)) {
+        option.textContent = tipoProceso+procesoRepetido;
+        option.setAttribute('value',`${tipoProceso+procesoRepetido}`);
+        option.setAttribute('class',`${tipoProceso+procesoRepetido}`);
+        option.setAttribute('id',`${tamanioProceso}`);
+    } else {
+        option.textContent = tipoProceso;
+        option.setAttribute('value',`${tipoProceso}`);
+        option.setAttribute('class',`${tipoProceso}`);
+        option.setAttribute('id',`${tamanioProceso}`);
+    }
     $terminarProceso.appendChild(option);
 }
 const espacioEnMemoria = () => {
@@ -91,7 +137,15 @@ const quitarProcesoMemoriaVisual = (procesoSeleccionado) => {
     $arrayPaguinas.forEach(e => {
         if (e.textContent == procesoSeleccionado) {
             e.textContent = '';
-            e.classList.remove(`color-memoria-${procesoSeleccionado.toLowerCase()}`);
+            if(procesoSeleccionado == 'A' || 
+                procesoSeleccionado == 'B' || 
+                procesoSeleccionado == 'C' || 
+                procesoSeleccionado == 'D' || 
+                procesoSeleccionado == 'E') {
+                e.classList.remove(`color-memoria-${procesoSeleccionado.toLowerCase()}`);
+            } else {
+                e.style.backgroundColor = '';
+            }
         }
     })
 }
@@ -124,17 +178,30 @@ const mostrarProcesoSeleccionado = (proceso,tamanio) => {
     } else if(tamanio == '8') {
         $reinicarTamanio.textContent = '1,024';
     }
+    $btnReinicarProceso.removeAttribute('disabled','true');
+    $btnReinicarProceso.classList.remove('boton-dasactivado');
 }
 const reiniciarProcesoSeleccionado = (proceso,tamanio) => {
+    if (procesoExiste(proceso)) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'El proceso existe',
+            text: `Se reiniciara como: ${proceso+procesoRepetido}`,
+          });
+    }
     let $procesosEliminar = document.querySelector(`#procesos-espera > #${proceso}`);
     if (parseInt(tamanio) <= espacioEnMemoria()) {
         agregarProceso(proceso);
-        llenarmemoria(tamanio,proceso);
         procesosParaTerminar(proceso,tamanio);
+        llenarmemoria(tamanio,proceso);
         contarProcesos_contarPaginas(tamanio);
         $procesosEliminar.remove();
         $reinicarProceso.textContent = '';
         $reinicarTamanio.textContent = '';
+        $btnReinicarProceso.setAttribute('disabled','true');
+        $btnReinicarProceso.classList.add('boton-dasactivado');
+        $btnTerminarProceso.removeAttribute('disabled');
+        $btnTerminarProceso.classList.remove('boton-dasactivado');
     } else{
         Swal.fire({
             icon: 'error',
@@ -144,15 +211,25 @@ const reiniciarProcesoSeleccionado = (proceso,tamanio) => {
     }
 }
 
+window.addEventListener('load',(E) => {
+    $btnTerminarProceso.setAttribute('disabled','true');
+    $btnTerminarProceso.classList.add('boton-dasactivado');
+    $btnReinicarProceso.setAttribute('disabled','true');
+    $btnReinicarProceso.classList.add('boton-dasactivado');
+});
+
 $btnIniciarProceso.addEventListener('click', () => {
+    $btnTerminarProceso.removeAttribute('disabled');
+    $btnTerminarProceso.classList.remove('boton-dasactivado');
+
     const $tipoProceso = document.getElementById('lista-procesos').value;
     const $tamanioProceso = document.getElementById('tamanio-proceso').value;
     
     if (espacioEnMemoria() >= $tamanioProceso) {
         agregarProceso($tipoProceso);
+        procesosParaTerminar($tipoProceso,$tamanioProceso);
         llenarmemoria($tamanioProceso,$tipoProceso);
         contarProcesos_contarPaginas($tamanioProceso);
-        procesosParaTerminar($tipoProceso,$tamanioProceso);
     } else {
         Swal.fire({
             icon: 'error',
@@ -166,21 +243,28 @@ $btnIniciarProceso.addEventListener('click', () => {
 
 $btnTerminarProceso.addEventListener('click', () => {
     const $procesoSeleccionado = $terminarProceso.value;
+    quitarProcesoMemoriaVisual($procesoSeleccionado);
     quitarProcesoMemoria($procesoSeleccionado);
     removerProceso($procesoSeleccionado);
-    quitarProcesoMemoriaVisual($procesoSeleccionado);
     actualizarNprocesosNpaginas($procesoSeleccionado);
+    if (contadorProcesos==0) {
+        $btnTerminarProceso.setAttribute('disabled','true');
+        $btnTerminarProceso.classList.add('boton-dasactivado');
+    }
 });
 
 $procesosEspera.addEventListener('click',(e) => {
     procesoEnEsperaSeleccionado = e.target.dataset.proceso;
     tamanioEnEsperaSeleccionado = e.target.dataset.tamanio;
     
-    if (e.target.id) {
+    if (e.target.id == 'procesos-espera') {
         $reinicarProceso.textContent = '';
         $reinicarTamanio.textContent = '';
+        $btnReinicarProceso.setAttribute('disabled','true');
+        $btnReinicarProceso.classList.add('boton-dasactivado');
+    } else {
+        mostrarProcesoSeleccionado(procesoEnEsperaSeleccionado,tamanioEnEsperaSeleccionado);
     }
-    mostrarProcesoSeleccionado(procesoEnEsperaSeleccionado,tamanioEnEsperaSeleccionado);
 });
 
 $btnReinicarProceso.addEventListener('click',() => {
